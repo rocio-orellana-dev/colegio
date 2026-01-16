@@ -1,53 +1,57 @@
-
 from django.contrib import admin
 from django.urls import path
 from academico import views
+# Importamos las nuevas vistas de la carpeta accounts
+from accounts.views import MyLoginView, MyLogoutView 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-#-----------------------------INDEX -------------------------
-    path('',views.mostrarIndex),
+    # ----------------------------- INDEX -------------------------
+    path('', views.mostrarIndex, name='index'),
 
-#-----------------------------INICIO DE USUARIO -------------------------
-    path('login',views.IniciarSesion),
+    # ----------------------------- INICIO DE USUARIO -------------------------
+    # Actualizado para usar MyLoginView y el template templates/accounts/login.html
+    path('login/', MyLoginView.as_view(), name='login'),
 
-#-----------------------------CIERRA SESION -------------------------
-    path('logout/',views.CerrarSesion),
+    # ----------------------------- CIERRA SESION -------------------------
+    # Actualizado para usar MyLogoutView
+    path('logout/', MyLogoutView.as_view(), name='logout'),
 
+    # ------------------------------ REGRESAR AL MENU ----------------------
+    path('menu_principal/', views.volverMenu, name='menu_principal'),
 
-#------------------------------BOTON DE REGRESAR AL MENU PRINCIPAL----------------------
-path('menu_principal',views.volverMenu),
-
-#-----------------------------REGISTRAR NOTAS-------------------------
-    path('form_registrar_notas',views.MostrarFormRegistrarNotas),
-    path('form_registrar_nota',views.InsertarNotas),
+    # ----------------------------- REGISTRAR NOTAS -------------------------
+    path('form_registrar_notas/', views.MostrarFormRegistrarNotas, name='form_registrar_notas'),
+    path('form_registrar_nota/', views.InsertarNotas, name='insertar_nota'),
     
-#-----------------------------LISTAR NOTAS-------------------------
-    path('listado_notas',views.MostrarListadoNotas),
+    # ----------------------------- LISTAR NOTAS -------------------------
+    path('listado_notas/', views.MostrarListadoNotas, name='listado_notas'),
 
-#-----------------------------MODIFICAR NOTAS-------------------------
-    path('form_actualizar_notas/<int:id>',views.MostrarModificarNotas),
-    path('actualizar_notas/<int:id>',views.ModificarNotas),
-#-----------------------------ELIMINAR NOTAS-------------------------
-    path('eliminar_nota/<int:id>',views.EliminarNotas),
+    # ----------------------------- MODIFICAR NOTAS -------------------------
+    path('form_actualizar_notas/<int:id>/', views.MostrarModificarNotas, name='form_actualizar_notas'),
+    path('actualizar_notas/<int:id>/', views.ModificarNotas, name='actualizar_notas'),
 
-#-----------------------------LISTAR ALUMNOS-------------------------
-    path('listado_alumnos',views.MostrarListadoAlumnos),
-#-----------------------------MODIFICAR ALUMNOS-------------------------
-    path('form_actualizar_alumno/<int:id>',views.MostrarModificarAlumnos),
-    path('actualizar_alumnos/<int:id>',views.ModificarAlumnos),
-#-----------------------------ELIMINAR ALUMNOS-------------------------
-    path('eliminar_alumno/<int:id>',views.EliminarAlumnos),
-#-----------------------------REGISTRAR ALUMNOS-------------------------
-    path('form_registrar_alumnos',views.MostrarFormRegistrarAlumnos),
-    path('form_registrar_alumno',views.InsertarAlumnos),
+    # ----------------------------- ELIMINAR NOTAS -------------------------
+    path('eliminar_nota/<int:id>/', views.EliminarNotas, name='eliminar_nota'),
 
-#---------------------------------APODERADO CON UN ALUMNO---------------------------
+    # ----------------------------- LISTAR ALUMNOS -------------------------
+    path('listado_alumnos/', views.MostrarListadoAlumnos, name='listado_alumnos'),
 
-    path('listado_notas_alumno/<int:id>', views.MostrarListadoNotasAlumno),
+    # ----------------------------- MODIFICAR ALUMNOS -------------------------
+    path('form_actualizar_alumno/<int:id>/', views.MostrarModificarAlumnos, name='form_actualizar_alumno'),
+    path('actualizar_alumnos/<int:id>/', views.ModificarAlumnos, name='actualizar_alumnos'),
 
-#------------------------------BOTON DE REGRESAR AL MENU PRINCIPAL----------------------
-    path('menu_principal2', views.volverMenu2 )
+    # ----------------------------- ELIMINAR ALUMNOS -------------------------
+    path('eliminar_alumno/<int:id>/', views.EliminarAlumnos, name='eliminar_alumno'),
+
+    # ----------------------------- REGISTRAR ALUMNOS -------------------------
+    path('form_registrar_alumnos/', views.MostrarFormRegistrarAlumnos, name='form_registrar_alumnos'),
+    path('form_registrar_alumno/', views.InsertarAlumnos, name='insertar_alumno'),
+
+    # --------------------------- NOTAS POR ALUMNO ---------------------------
+    path('listado_notas_alumno/<int:id>/', views.MostrarListadoNotasAlumno, name='listado_notas_alumno'),
+
+    # ------------------------------ REGRESAR AL MENU 2 ----------------------
+    path('menu_principal2/', views.volverMenu2, name='menu_principal2')
 ]
-
